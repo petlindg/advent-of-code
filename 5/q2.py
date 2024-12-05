@@ -6,8 +6,8 @@ def c2(ls:list, m:list):
         for t in tra:
             if t in m[ls[i]]:
                 tmp = ls[i]
-                ls[i] = ls[i-1]
-                ls[i-1] = tmp
+                ls[i] = t
+                ls[ls.index(t)] = tmp
                 return c2(ls, m)
         tra.append(ls[i])
     return ls[len(ls)//2]
