@@ -1,10 +1,10 @@
 import System.IO
 import Data.Char
 
+
 safeInc1 :: [Int] -> Bool
 safeInc1 (x:[]) = True
 safeInc1 (x1:(x2:xs)) = x1 < x2 && x1+3 >= x2 && safeInc1 (x2:xs)
-
 
 safeDec1 :: [Int] -> Bool
 safeDec1 (x:[]) = True
@@ -45,9 +45,10 @@ sii []        ys cs = [(ci cs 0):ys]
 sii ('\n':xs) ys cs = ((ci cs 0):ys):sii xs [] []
 sii (' ':xs)  ys cs = sii xs ((ci cs 0):ys) []
 sii (x:xs)    ys cs = sii xs ys (x:cs)
+
 main :: IO ()
 main = do
-    input <- readFile "input.txt"
+    input <- readFile "input1.txt"
     let input' = sii input [] []
     let s = safeCount input'
     print s
