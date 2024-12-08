@@ -1,11 +1,13 @@
 import Data.Char
 
-check :: Int -> Int -> [Int] -> Bool
-check tar i []     = i==tar
-check tar i (t:ts) =
-    i <= tar &&
-    check tar (i+t) ts ||
-    check tar (i*t) ts
+check :: Int -> [Int] -> Bool
+check tar params = check' tar params 0
+    where
+        check' tar [] i     = i==tar
+        check' tar (t:ts) i =
+            i <= tar &&
+            check' tar ts (i+t) ||
+            check' tar ts (i*t)
 
 splitOn :: Eq a => a -> [a] -> [[a]]
 splitOn c ss = split' ss c []
@@ -19,5 +21,5 @@ splitOn c ss = split' ss c []
 main :: IO ()
 main = do
     input <- readFile "input.txt"
-    let result = sum $ map ((\z -> if check (head z) 0 (tail z) then head z else 0) . (map (\y -> read y :: Int) . splitOn ' ' . filter (\x -> isDigit x || isSpace x))) (splitOn '\n' input)
+    let result = sum $ map ((\z -> if check (head z) (tail z) then head z else 0) . (map (\y -> read y :: Int) . splitOn ' ' . filter (\x -> isDigit x || isSpace x))) (splitOn '\n' input)
     print result
